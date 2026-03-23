@@ -1,0 +1,34 @@
+Data Cleaning – Milestone 2
+
+
+Overview
+
+This stage focused on transforming the merged country-year dataset into a clean and analysis-ready file suitable for feature engineering and modeling. The objective was to improve consistency, validate the panel structure, and address key data quality issues without imposing unjustified assumptions on missing observations.
+
+The cleaning process included:
+- data type conversion
+- text standardization
+- duplicate validation
+- missing-value review
+- range and validity checks
+
+
+Cleaning Decisions
+
+The country-year structure was preserved as the core analytical unit, with uniqueness defined as one observation per country_code and year. Duplicate checks confirmed that the merged dataset already maintained a valid panel format.
+
+Variables were converted into appropriate types so that year, numeric indicators, and categorical fields could be handled consistently in later steps. String-based variables such as country identifiers and sanction categories were standardized to reduce hidden inconsistencies caused by casing or formatting.
+
+Missing values were handled using variable-specific rules. Sanction-related fields were filled with defensible default values where the absence of a sanction record could reasonably be interpreted as no active sanction in that year. Political, trade, and socioeconomic variables were left as missing when there was no clear basis for filling them during the cleaning stage.
+
+Additional checks were performed for invalid values. Negative values in non-negative indicators and out-of-range values in percentage-style fields were converted to missing values so they would not distort later analysis.
+
+
+Before vs After
+
+The main effect of this stage was improved consistency and validation rather than aggressive reduction of missingness. This was intentional, since much of the remaining missing data reflects genuine limitations in source coverage across countries and years rather than formatting problems.
+
+
+Remaining Risks
+
+Important risks remain for later stages. In particular, missingness may not be random for variables such as poverty, inequality, and political indicators. This may influence interpretation and should be considered in the modeling stage.

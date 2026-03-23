@@ -104,7 +104,7 @@ At this stage, the focus is on building a structured, replicable panel dataset c
 data/raw/ – Raw datasets (sanctions, trade, macroeconomic, social, conflict, political)
 data/processed/ – Cleaned and merged country-year panel dataset
 database/ – SQLite database files and schema
-notebooks/ – Data acquisition, cleaning, and exploratory analysis
+Notebook/ – Data acquisition, cleaning, and exploratory analysis
 diary/ – Milestone documentation, reflections, and data dictionary
 
 
@@ -113,3 +113,45 @@ diary/ – Milestone documentation, reflections, and data dictionary
 This repository provides a transparent and reproducible framework for evaluating how sanctions, as instruments of economic coercion, affect civilian well-being and whether economic hardship coincides with political instability.
 
 By integrating trade channels, welfare indicators, conflict controls, and political outcomes, the project moves beyond simple correlation and toward structured causal analysis appropriate for master’s-level research.
+
+## Milestone 2
+
+### Project Overview
+This stage of the project studies how international sanctions relate to civilian well-being using a country-year panel dataset. It combines economic, political, conflict, and trade data into a reproducible workflow for cleaning, feature engineering, modeling, and visualization.
+
+For Milestone 2, the project focuses on:
+- data wrangling and feature engineering
+- baseline predictive modeling
+- a static dashboard with widgets
+
+The main modeling task predicts **child_mortality_u5** as a proxy for civilian well-being.
+
+---
+
+### Repository Structure
+
+```text
+.
+├── data/
+│   ├── raw/
+│   └── processed/
+│       ├── merged_dataset.csv
+│       ├── analysis_ready_dataset.csv
+│       ├── feature_engineered_dataset.csv
+│       ├── model_ready_dataset.csv
+│       ├── model_ready_scaled_dataset.csv
+│       ├── linear_model_coefficients.csv
+│       ├── train_predictions.csv
+│       ├── validation_predictions.csv
+│       ├── test_predictions.csv
+│       └── model_metrics.csv
+│
+├── Notebook/
+│   ├── data_wrangling.ipynb
+│   ├── data_modeling.ipynb
+│   └── data_visualization_static.ipynb
+│
+├── diary/
+├── docs/
+├── README.md
+└── requirements.txt

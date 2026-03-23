@@ -1,0 +1,39 @@
+Feature Engineering – Milestone 2
+
+
+Overview
+
+This stage extended the cleaned country-year dataset into a feature-engineered dataset designed to support the project objective of evaluating how sanctions relate to civilian well-being. The emphasis was on constructing interpretable and defensible features that reflect the substantive context of sanctions, trade exposure, conflict, and social outcomes.
+
+The feature engineering process included:
+- derived social and trade measures
+- lagged variables
+- year-to-year change measures
+- categorical encoding
+- feature selection for modeling
+
+
+Engineered Features
+
+Several project-relevant features were created. Gender gap measures were constructed for school enrollment and child mortality in order to capture differences between female and male outcomes. A total trade exposure measure was created by combining oil exports, pharmaceutical imports, and fuel imports.
+
+Interaction features were also added to reflect how sanction intensity may operate differently depending on political conditions and conflict exposure. These variables help align the final feature table with the project’s mechanism-based research design.
+
+Lagged variables were introduced for selected economic, sanction, and welfare indicators to capture delayed effects over time. Change variables were also created to measure year-to-year movement in key macroeconomic outcomes rather than only static levels.
+
+Sanction-related categorical variables were encoded using one-hot encoding because sanction type is nominal rather than ordinal.
+
+
+Feature Selection
+
+Identifier columns such as country_code and country were removed from the final model-ready dataset because they function as identifiers rather than meaningful predictive features. The final output preserves the country-year structure while producing a richer set of variables for later analysis.
+
+
+Before vs After
+
+Relative to the cleaned analysis-ready dataset, the feature-engineered table includes a broader representation of trade exposure, sanction context, political interaction, and time dynamics. The resulting model-ready table is more suitable for machine learning and statistical modeling.
+
+
+Remaining Risks
+
+Some engineered variables are conceptually related to one another and may be highly correlated. This is not necessarily a problem for prediction, but it may affect coefficient stability and interpretation in linear models.

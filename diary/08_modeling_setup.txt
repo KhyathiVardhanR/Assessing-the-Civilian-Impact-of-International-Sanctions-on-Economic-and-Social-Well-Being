@@ -1,0 +1,27 @@
+Data Modeling Setup – Milestone 2
+
+
+Overview
+
+This stage began the transition from prepared data to predictive analysis. The objective was to define a modeling target, establish a reproducible evaluation strategy, and train a baseline model that could serve as a reference point for later interpretation.
+
+The target variable selected for the first model was under-5 child mortality (child_mortality_u5), which serves as a meaningful proxy for civilian well-being and offers stronger data coverage than some alternative welfare indicators.
+
+
+Model Choice
+
+A linear regression model was used as the initial baseline. This choice was motivated by interpretability, simplicity, and suitability for a continuous target variable. At this stage, the goal was not to maximize predictive performance, but to establish a transparent benchmark and evaluate whether the engineered feature set contained useful signal.
+
+Missing target observations were removed because supervised learning requires observed outcomes. Remaining missing predictor values were handled through median imputation, which provided a straightforward and reproducible baseline strategy.
+
+
+Evaluation Design
+
+A train, validation, and test split was implemented using year-based separation rather than random splitting. This choice was made to preserve the temporal structure of the country-year panel and to evaluate generalization on later unseen years.
+
+Earlier years were used for training, intermediate years for validation, and later years for testing. This design provides a more defensible measure of model generalization than a random split across time.
+
+
+Importance of Generalization
+
+This stage reinforced the distinction between fitting and generalization. The objective was not only to train a model successfully, but also to construct an evaluation framework capable of detecting whether the model learns patterns that extend beyond the training data.

@@ -1,0 +1,31 @@
+Static Dashboard and Communication – Milestone 2
+
+
+Overview
+
+This stage focused on transforming the processed data and modeling outputs into a static dashboard that communicates the project findings clearly. The dashboard was designed to present the workflow as a coherent system, connecting model performance, prediction quality, feature influence, and descriptive patterns in sanctions and civilian well-being.
+
+The dashboard uses saved outputs from the wrangling and modeling stages, including:
+- model performance metrics
+- test-set predictions
+- model coefficients
+- feature-engineered country-year data
+
+
+Dashboard Components
+
+Several complementary visuals were included. These cover model performance across data splits, comparison of actual versus predicted child mortality, the most influential baseline features, average child mortality by sanction status, and residual behavior on the test set.
+
+Widget-based controls were added to support simple view switching within the notebook. These controls allow the reader to examine different year-level trends, including average child mortality, average sanction intensity, and the share of sanctioned country-years. Additional interactive views compare actual and predicted yearly averages.
+
+
+Communication Value
+
+Special attention was given to readability. Titles, axis labels, and explanatory summary text were added so that the notebook can function as a communication artifact rather than only a technical script.
+
+This stage completed the Milestone 2 workflow by connecting cleaned data, engineered features, model results, and visual explanation in a single reproducible notebook-based dashboard.
+
+
+Next Steps
+
+The dashboard provides a strong summary of the current baseline results. Future improvements could include comparison with additional models, richer subgroup views, and expanded discussion of how descriptive patterns relate to the broader research question.

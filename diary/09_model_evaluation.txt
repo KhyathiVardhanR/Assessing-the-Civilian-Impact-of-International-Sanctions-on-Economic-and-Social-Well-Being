@@ -1,0 +1,33 @@
+Model Evaluation and Interpretation – Milestone 2
+
+
+Overview
+
+This stage focused on evaluating the baseline regression model and interpreting whether the observed performance reflected genuine predictive learning. Initial results appeared unrealistically strong, which prompted additional diagnostic work before accepting the model as a valid baseline.
+
+The evaluation process included:
+- training and validation comparison
+- leakage diagnosis
+- retraining with a reduced feature set
+- final validation and test assessment
+
+
+Leakage Diagnosis
+
+The initial model produced near-perfect performance on both the training and validation sets. Given the nature of the project and the target variable, this result was not plausible. A correlation review showed that several mortality-related predictors were almost direct components or extremely close proxies for the target.
+
+These leakage-prone variables were removed from the modeling feature set in order to produce a more defensible baseline model.
+
+
+Revised Model Performance
+
+After removing leakage-prone features, the model produced substantially more realistic training, validation, and test results. Performance remained meaningful, indicating that the broader feature set still contained useful information about child mortality, but the revised results no longer suggested artificial perfection.
+
+The difference between training and validation/test performance indicated some generalization gap, but not enough to suggest severe overfitting. At the same time, performance remained strong enough to avoid a conclusion of clear underfitting. This makes the revised baseline a reasonable foundation for the project.
+
+
+Interpretation
+
+This stage demonstrated that model evaluation must go beyond reading performance metrics mechanically. Implausibly strong results can indicate data leakage or other flaws in the modeling design. By diagnosing and correcting this issue, the final baseline model became more credible and more appropriate for later visualization and interpretation.
+
+The coefficient review also highlighted influential variables in the baseline model, although these coefficients should be interpreted as associations rather than causal effects.
