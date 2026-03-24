@@ -2,7 +2,7 @@
 
 ### Heilmeier Catechism – Project Overview
 
-Research Question:
+Research Question: 
 How do international sanctions affect civilian economic and social well-being over time, through what economic transmission mechanisms do these effects operate, and do these pressures coincide with political instability or government turnover?
 
 
