@@ -97,8 +97,6 @@ data = load_data()
 df = data["df"]
 
 # ─── Sidebar Navigation ───────────────────────────────────────────────────────
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/UN_emblem_blue.svg/200px-UN_emblem_blue.svg.png",
-                 width=60)
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
     "Select a Page",
