@@ -26,6 +26,8 @@ Sanctions
 ## Final Outcome (Milestone 3)
 
 ### Deployed Tool
+🔗 **Live App:** [https://sanctions-civilian-wellbeing.streamlit.app](https://sanctions-civilian-wellbeing.streamlit.app)
+
 The project is deployed as an interactive **Streamlit dashboard** (`app.py`) that allows users to:
 - Explore the country-year panel dataset with filters
 - Visualize sanction impacts on child mortality, education, and unemployment
