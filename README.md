@@ -115,10 +115,11 @@ The analysis is split across five notebooks that should be run in order:
 
 ```bash
 pip install -r requirements.txt
+jupyter notebook
 ```
 
 1. `milestone1.ipynb` — data acquisition, SQLite database setup, initial EDA
 2. `data_wrangling.ipynb` — cleaning, merging, feature engineering
 3. `data_modeling.ipynb` — Linear Regression and Random Forest
-4. `data_visualization_static.ipynb` — static plots and summaries
+4. `data_visualization_static.ipynb` — static dashboard with widgets *(run all cells to activate interactive views)*
 5. `milestone3_final.ipynb` — fixed-effects regression, event study, Gradient Boosting
