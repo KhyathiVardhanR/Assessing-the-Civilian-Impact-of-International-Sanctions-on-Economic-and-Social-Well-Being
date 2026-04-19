@@ -1,0 +1,131 @@
+Final Findings, Deployment, and Project Completion – Milestone 3
+
+
+Overview
+
+This final entry documents the completed project and reflects on the full data science cycle
+from problem formulation to deployed interactive tool. It also explains the key substantive
+findings and the decisions made in communicating them.
+
+
+Final Architecture of the Project
+
+The completed project integrates four data sources (sanctions, trade, welfare, political)
+into a country-year panel dataset covering approximately 190 countries from 1995 to 2024.
+The full data science cycle proceeds through:
+
+1. Problem formulation and data acquisition (Milestone 1)
+2. Relational database design and storage (Milestone 1)
+3. Exploratory data analysis (Milestone 1)
+4. Data cleaning and standardization (Milestone 2)
+5. Feature engineering — lags, interactions, gender gaps, log transforms (Milestone 2)
+6. Baseline and advanced predictive modeling (Milestone 2)
+7. Static dashboard for communication (Milestone 2)
+8. Fixed-effects causal regression (Milestone 3)
+9. Event-study design (Milestone 3)
+10. Gradient Boosting as a third model (Milestone 3)
+11. Heterogeneous effects by sanction type and political regime (Milestone 3)
+12. Multi-outcome analysis (child mortality, school enrollment, unemployment) (Milestone 3)
+13. Streamlit interactive deployment (Milestone 3)
+
+
+Deployed Tool
+
+The project is deployed as a Streamlit dashboard (app.py) with six pages:
+- Overview: research framework and methodology summary
+- Data Explorer: filter and explore the panel dataset interactively
+- Sanction Impact: descriptive comparisons across outcomes and over time
+- Model Results: all three models, feature importance, prediction quality
+- Advanced Analysis: fixed-effects regression, event study, multi-outcome FE
+- Findings: key conclusions, variable justification, limitations
+
+The dashboard loads all outputs from the processed data folder and presents them
+through Plotly interactive charts. It is designed to communicate the project findings
+to a non-technical audience while preserving methodological depth for reviewers.
+
+
+Key Substantive Findings
+
+1. Unadjusted descriptive gap exists but is misleading: in raw comparisons, sanctioned
+   countries appear to have worse outcomes across all five dimensions. However, this reflects
+   a mix of sanction effects and the fact that sanctioned countries were already different
+   before sanctions were imposed.
+
+2. Fixed-effects estimation across all five outcomes tells a consistent story: after
+   controlling for country and year fixed effects, the within-country sanction coefficient
+   is small and NOT statistically significant for any of the five outcomes (all p > 0.05).
+   Specifically:
+   - Child mortality (Health): coef=+0.64, p=0.69
+   - School enrollment (Education): coef=+0.05, p=0.97
+   - Girls enrollment (Gender equity): coef=+0.52, p=0.67
+   - Unemployment (Economic): coef=-0.16, p=0.68
+   - Inflation (Price stability): coef=+3.37, p=0.24
+
+3. Composite Civilian Well-Being Index: After standardizing and combining all five
+   dimensions, the gap between sanctioned (94.8) and non-sanctioned (94.2) countries
+   disappears entirely. The within-country effect of sanctions on composite well-being
+   is near zero after FE.
+
+4. The event study confirms this: child mortality in sanctioned countries was declining
+   over the full event window (-5 to +5), tracking the global downward trend. There is
+   no visible break at the sanction onset year.
+
+5. The best predictive model (Gradient Boosting) achieves Validation R²=0.83 and
+   Test R²=0.65. The most important predictors are female primary school enrollment,
+   poverty rate, and school enrollment — structural welfare indicators that pre-date
+   and dominate over sanction variables.
+
+6. Authoritarian regimes show larger descriptive welfare gaps under sanctions in
+   unadjusted comparisons, but after FE the regime × sanction interaction weakens,
+   again suggesting selection bias is the primary driver.
+
+The core finding of this project is methodologically rigorous and honest: the widely-cited
+descriptive evidence that sanctions harm civilians is substantially driven by the fact that
+the countries targeted by sanctions were already poorer and more vulnerable before sanctions
+were imposed. Careful panel identification using fixed effects reduces the estimated sanction
+effect to near zero across all five civilian well-being dimensions studied.
+
+
+Variable Selection: Final Justification
+
+The decision to use child_mortality_u5 as the primary dependent variable was correct.
+It is the most complete, most internationally comparable, and most policy-relevant outcome
+available in the dataset. Poverty rate and Gini index are theoretically better welfare
+measures but are too sparse (68% and 74% missing) to support robust panel analysis.
+
+Using both sanction_active and sanction_intensity_index as treatment variables captures
+both the presence and severity of economic coercion — an important distinction given
+that targeted visa bans and comprehensive trade embargoes are categorically different.
+
+
+What I Would Do Differently
+
+If additional time were available, I would pursue three improvements:
+
+1. Instrumental variables estimation: Finding a valid instrument for sanction imposition
+   (a variable that predicts which countries get sanctioned but does not directly affect
+   welfare) would allow stronger causal claims than fixed effects alone.
+
+2. Synthetic control method: For major sanction episodes (Iran, Russia, North Korea),
+   constructing a synthetic comparison country from the weighted combination of
+   non-sanctioned countries would provide sharper case-level causal estimates.
+
+3. Imputation of poverty data: Using multiple imputation to recover some of the missing
+   poverty rate and Gini index values would allow welfare channel analysis through the
+   inequality dimension that is currently limited by data sparseness.
+
+
+Reflection on the Full Data Science Cycle
+
+This project demonstrates that a rigorous data science analysis requires far more than
+fitting a model. The largest methodological contribution of Milestone 3 — fixed-effects
+regression — is not about improving R² but about asking whether the model is actually
+answering the right question. A model that explains 99% of variance in child mortality
+(as the initial leakage-prone model did) can be completely misleading if it is measuring
+the wrong thing.
+
+The honest finding — that sanctions are associated with worse welfare but that selection
+bias accounts for a significant portion of the gap — is more valuable than a model
+that produces large, superficially impressive sanction coefficients. Real data science
+means following the evidence wherever it leads, even when the answer is more complicated
+than expected.

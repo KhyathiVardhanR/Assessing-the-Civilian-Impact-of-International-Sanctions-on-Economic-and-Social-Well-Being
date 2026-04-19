@@ -1,8 +1,8 @@
 Project Title
 
 Assessing the Civilian Impact of International Sanctions on Economic and Social Well-Being
-
-
+ 
+ 
 Problem Statement
 
 International sanctions are designed to impose economic costs in order to alter government behavior. However, these costs are frequently transmitted through domestic markets and civilian populations. While traditional analyses emphasize macroeconomic indicators such as GDP growth, inflation, and unemployment, these measures alone do not fully capture how sanctions affect household welfare and everyday living conditions.

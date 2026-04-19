@@ -1,0 +1,70 @@
+Fixed-Effects Panel Regression – Milestone 3
+
+
+Overview
+
+This stage introduced the most methodologically rigorous analysis of the project: fixed-effects (FE)
+panel regression. This step directly addresses the key limitation of Milestones 1 and 2, which used
+predictive models that could not isolate the causal effect of sanctions from selection bias.
+
+The central problem is that sanctioned countries are not randomly selected. Countries that face
+sanctions tend to be in political or economic crisis already, which means their civilian welfare
+outcomes may be deteriorating for reasons unrelated to the sanctions themselves. A naive OLS
+regression comparing sanctioned to non-sanctioned countries conflates the sanction effect with
+all the pre-existing differences between these groups.
+
+
+What Fixed Effects Does
+
+The within-estimator (used here through the demeaning approach) removes all time-invariant
+country-level differences from the estimation. By subtracting each country's own time-average
+from every variable, the model uses only within-country variation over time. The sanction
+coefficient then reflects: when a country transitions from no sanctions to sanctions, what
+happens to child mortality on average, holding year effects and economic controls constant?
+
+Year fixed effects (implemented as dummy variables for each year) absorb global trends, such as
+worldwide improvements in child health due to advances in medicine, that would otherwise bias
+the estimates.
+
+
+Variable Selection
+
+The dependent variable remains child_mortality_u5. This was the correct choice because it is the
+most complete outcome variable and most directly sensitive to the humanitarian channels that
+sanctions target — medicine, food, energy.
+
+The treatment variables are sanction_active (binary) and sanction_intensity_index (continuous).
+Using both captures whether any sanction is present and how severe it is, allowing the model to
+detect dose-response effects.
+
+Control variables include gdp_growth, inflation_rate, conflict_incidence, conflict_intensity,
+unemployment_rate, log_total_trade_exposure, and regime_score. These were chosen because they
+are established confounders in the literature: armed conflict can cause welfare deterioration
+that looks like a sanction effect if not controlled; regime type correlates with both sanction
+imposition and welfare provision.
+
+
+Key Finding
+
+After controlling for country and year fixed effects, the within-country sanction effect on child
+mortality is substantially smaller than the unadjusted descriptive gap. This is an honest and
+important finding: it does not mean sanctions have no effect, but it does mean that much of the
+raw statistical association between sanctions and poor welfare reflects selection bias. Countries
+that get sanctioned were already different.
+
+This result has important policy implications: policies targeting sanctioned countries for
+humanitarian relief need to account for the fact that pre-existing vulnerability is a major
+driver of poor welfare outcomes, not just the sanctions themselves.
+
+
+Decisions Made
+
+I chose HC1 heteroskedasticity-robust standard errors rather than classical OLS standard errors.
+In a panel dataset with countries of very different sizes and income levels, residual variance is
+unlikely to be constant across observations. Robust standard errors are more conservative and
+more defensible in this setting.
+
+I implemented the within-transformation manually using pandas rather than relying on a
+specialized panel econometrics package. This makes the code more transparent and reproducible
+without requiring installation of additional dependencies beyond what was already in the project.
+The mathematics are identical to what a package like linearmodels would produce.

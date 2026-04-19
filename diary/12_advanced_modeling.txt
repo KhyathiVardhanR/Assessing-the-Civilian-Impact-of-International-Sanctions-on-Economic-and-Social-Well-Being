@@ -1,0 +1,75 @@
+Advanced Modeling: Gradient Boosting and Event Study – Milestone 3
+
+
+Overview
+
+This entry documents two major additions in Milestone 3: the event-study analysis and the
+introduction of Gradient Boosting as a third machine learning model. Together these additions
+address the two main gaps from Milestone 2: understanding the dynamic shape of sanction effects
+over time, and determining whether a more powerful model can improve predictive accuracy.
+
+
+Event Study Analysis
+
+The event study is a quasi-experimental design that examines how child mortality evolves
+in the years before and after a country's first sanction episode. I defined year 0 as
+the first year a country had sanction_active = 1, and tracked child mortality from 5 years
+before to 5 years after.
+
+The key insight from the event study is that child mortality in eventually-sanctioned countries
+was already elevated before sanctions were imposed. This confirms what the fixed-effects
+regression suggested: selection bias is real. Countries that get sanctioned are not comparable
+to countries that never face sanctions, even before the sanctions begin.
+
+The event study also reveals that child mortality trends do not show a sharp break at year 0 in
+many countries. Instead, the trajectory appears to be a gradual trend that predates the sanction
+episode. This is important for interpreting the fixed-effects estimates and for understanding the
+limits of the causal claims the project can make.
+
+I normalized the event study to year −1 (the year immediately before sanctions) to focus on
+changes relative to the pre-sanction baseline rather than levels. This makes it easier to see
+whether there is any departure from the pre-sanction trajectory after sanctions are imposed.
+
+
+Gradient Boosting: Why it was chosen
+
+Milestone 2 used Linear Regression as a baseline and Random Forest as an advanced model.
+For Milestone 3 I added Gradient Boosting (sklearn's GradientBoostingRegressor) for three reasons:
+
+1. Gradient Boosting typically outperforms Random Forest on tabular structured data because it
+   builds trees sequentially, with each tree correcting the residuals of the previous one.
+   Random Forest builds trees in parallel without this error correction mechanism.
+
+2. The learning rate and subsample parameters provide explicit regularization, which reduces
+   the tendency to overfit on the training period (1995–2010) and fail to generalize to
+   the test period (2015–2024).
+
+3. Adding a third model completes the comparison arc: from simple linear (interpretable,
+   underfits nonlinearities) to tree ensemble (flexible but potentially overfit) to gradient
+   boosted trees (balanced regularization).
+
+
+Hyperparameter Choices
+
+I used n_estimators=300, max_depth=4, learning_rate=0.05, subsample=0.8, min_samples_leaf=10.
+
+- max_depth=4 prevents individual trees from becoming too complex and memorizing training data
+- learning_rate=0.05 (slow) with more trees is a well-established regularization strategy
+- subsample=0.8 introduces stochastic variation similar to bagging, which reduces variance
+- min_samples_leaf=10 prevents trees from splitting on very small node groups
+
+These are standard settings from the literature for tabular data. I did not run a full
+grid search given the panel structure of the data and the risk of optimizing for a
+particular time split at the expense of generalizability.
+
+
+Model Comparison
+
+The three-model comparison shows that Gradient Boosting achieves the best validation R² and
+is comparable to Random Forest on the test set. The relatively modest improvement on the test
+set (compared to Random Forest) confirms that there is a natural ceiling on predictive accuracy
+for this problem: child mortality from 2015+ depends on global trends and country-specific
+shocks that are not well represented in the 1995–2010 training period.
+
+The three models collectively demonstrate the full predictive modeling stage: a simple
+interpretable baseline, a nonlinear ensemble baseline, and an optimized gradient-based model.
