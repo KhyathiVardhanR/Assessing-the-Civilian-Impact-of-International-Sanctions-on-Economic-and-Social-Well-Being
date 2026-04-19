@@ -94,6 +94,20 @@ def load_data():
 
 
 data = load_data()
+
+# Remove World Bank regional aggregates and income-group codes —
+# these are not sovereign countries and should not appear in the analysis
+WB_AGGREGATES = {
+    'AFE','AFW','ARB','CEB','CSS','EAP','EAR','EAS','ECA','ECS',
+    'EMU','EUU','FCS','HIC','HPC','IBD','IBT','IDA','IDB','IDX',
+    'LAC','LCN','LDC','LIC','LMC','LMY','LTE','MEA','MIC','MNA',
+    'NAC','OED','OSS','PRE','PSS','PST','SAS','SSA','SSF','SST',
+    'TEA','TEC','TLA','TMN','TSA','TSS','UMC','WLD'
+}
+for key in data:
+    if isinstance(data[key], pd.DataFrame) and not data[key].empty and 'country_code' in data[key].columns:
+        data[key] = data[key][~data[key]['country_code'].isin(WB_AGGREGATES)].copy()
+
 df = data["df"]
 
 # ─── Sidebar Navigation ───────────────────────────────────────────────────────
