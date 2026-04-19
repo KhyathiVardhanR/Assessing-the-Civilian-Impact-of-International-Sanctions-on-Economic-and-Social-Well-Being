@@ -8,71 +8,73 @@
 
 ---
 
-## What this project is about
+## Overview
 
-Sanctions get imposed on countries all the time — but the debate is usually about whether they work politically. We wanted to ask a different question: **do ordinary people actually get hurt?**
+Sanctions are frequently imposed as a foreign policy tool — but the conversation around them tends to focus on whether they work politically. This project takes a different angle: **what happens to ordinary people?**
 
-We pulled together data from four sources (World Bank, UN Comtrade, GSDB, UCDP/Polity V) covering 1995–2024, built a panel dataset of ~7,800 country-year observations, and ran a bunch of models to see whether being under sanctions moves the needle on things like child mortality, school enrollment, and inflation.
+We built a panel dataset of ~7,800 country-year observations (1995–2024) by combining data from the World Bank, UN Comtrade, the Global Sanctions Database, and UCDP/Polity V. Using that, we examined whether sanctions exposure moves outcomes like child mortality, school enrollment, and inflation — and through what channels those effects might operate.
 
-The short answer: **the raw numbers make sanctioned countries look worse, but once you control for which countries actually get sanctioned (they were already poorer), the within-country effect basically disappears.** The story is more about pre-existing vulnerability than the sanctions themselves.
+The headline result: **sanctioned countries look worse in raw comparisons, but once you account for which countries get sanctioned in the first place (they were already more vulnerable), the within-country effect is not statistically significant.** The gap in outcomes is largely a pre-existing structural difference, not a sanctions effect.
 
 ---
 
-## The data science side
+## Methodology
 
-We used child mortality (under-5 deaths per 1,000 births) as our main outcome — it's a good proxy for food access, healthcare, and poverty all at once, and it had the fewest missing values (~9.5%).
+We used **under-5 child mortality** (deaths per 1,000 live births) as the primary outcome. It captures food security, healthcare access, and household poverty simultaneously, and had the lowest missing data rate (~9.5%) of any outcome we considered.
 
-Our models, in order of complexity:
-- Linear Regression (baseline)
+Three models were trained and compared:
+
+- Linear Regression — baseline
 - Random Forest
-- Gradient Boosting ← best performer (Test R² = 0.65)
+- Gradient Boosting — best performer (Validation R² = 0.83, Test R² = 0.65)
 
-For causal inference, we ran **fixed-effects panel regression** (within-country estimator) and an **event study** around sanction onset. Neither showed a statistically significant effect.
+For causal identification, we used **fixed-effects panel regression** (within-country estimator, demeaning approach) and an **event study** around sanction onset. Secondary outcomes — school enrollment, girls' primary enrollment, unemployment, and inflation — were tested in a multi-outcome specification.
 
-**Control variables:** GDP growth, inflation, conflict incidence and intensity, regime type (Polity V), unemployment, trade exposure.
+**Control variables:** GDP growth, inflation rate, conflict incidence and intensity, regime type (Polity V), unemployment rate, log trade exposure.
 
 ---
 
-## Key findings
+## Key Findings
 
-| Outcome | FE Effect | p-value |
-|---------|-----------|---------|
+| Outcome | Fixed-Effects Estimate | p-value |
+|---------|----------------------|---------|
 | Child mortality | +0.64 per 1,000 | 0.69 |
 | School enrollment | +0.05 pp | 0.97 |
-| Girls enrollment | +0.52 pp | 0.67 |
+| Girls' enrollment | +0.52 pp | 0.67 |
 | Unemployment | −0.16 pp | 0.68 |
 | Inflation | +3.37 pp | 0.24 |
 
-None of these are significant. The top predictors in our ML models were female primary enrollment, poverty rate, and school enrollment — not sanction status itself.
+None of these estimates reach statistical significance. The top predictors in the ML models were female primary enrollment, poverty rate, and school enrollment — not sanction status itself. The event study showed no sharp shift in child mortality at sanction onset.
 
-The event study also showed no sharp change in child mortality at the point sanctions were imposed. The gap between sanctioned and non-sanctioned countries in the raw data is largely a selection effect — countries that get sanctioned were already struggling.
-
----
-
-## Data sources
-
-| Dataset | Source | What we used it for |
-|---------|--------|---------------------|
-| Sanctions | Global Sanctions Data Base (GSDB) | sanction timing, type, intensity |
-| Trade | UN Comtrade | oil/pharma/fuel imports & exports |
-| Welfare | World Bank WDI | child mortality, enrollment, GDP, poverty |
-| Political | UCDP / Polity V / Archigos | conflict data, regime scores |
+The descriptive gap between sanctioned and non-sanctioned countries is real, but it reflects **selection** — countries that get sanctioned were already in worse shape before sanctions were imposed.
 
 ---
 
-## Dashboard
+## Data Sources
 
-The Streamlit app has 6 pages:
+| Dataset | Source | Variables |
+|---------|--------|-----------|
+| Sanctions | Global Sanctions Data Base (GSDB) | Sanction timing, type, intensity |
+| Trade | UN Comtrade | Oil, pharmaceutical, and fuel trade flows |
+| Welfare | World Bank WDI | Child mortality, enrollment, GDP, poverty |
+| Political | UCDP / Polity V / Archigos | Conflict data, regime scores |
 
-| Page | What's on it |
+---
+
+## Interactive Dashboard
+
+The app is deployed on Streamlit Community Cloud and has 6 pages:
+
+| Page | Description |
 |------|-------------|
 | Overview | Research question, dataset summary, methodology |
 | Data Explorer | Filter and explore the full dataset interactively |
-| Sanction Impact | Side-by-side comparisons across sanctions status |
-| Model Results | LR vs. Random Forest vs. Gradient Boosting |
-| Advanced Analysis | Fixed-effects regression, event study, multi-outcome |
-| Findings | What we concluded and why it matters |
+| Sanction Impact | Comparisons across sanction status for 5 outcomes |
+| Model Results | Linear Regression vs. Random Forest vs. Gradient Boosting |
+| Advanced Analysis | Fixed-effects regression, event study, multi-outcome results |
+| Findings | Conclusions, variable justification, policy implications |
 
+**Run locally:**
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
@@ -80,23 +82,23 @@ streamlit run app.py
 
 ---
 
-## Repo structure
+## Project Structure
 
 ```
 .
-├── app.py                               ← Streamlit dashboard
+├── app.py                               ← Streamlit dashboard (6 pages)
 ├── requirements.txt
 │
 ├── Notebook/
-│   ├── milestone1.ipynb                 ← EDA and data acquisition
+│   ├── milestone1.ipynb                 ← Data acquisition and EDA
 │   ├── data_wrangling.ipynb             ← Cleaning and feature engineering
-│   ├── data_modeling.ipynb              ← LR + Random Forest
-│   ├── data_visualization_static.ipynb  ← Static plots
+│   ├── data_modeling.ipynb              ← Linear Regression + Random Forest
+│   ├── data_visualization_static.ipynb  ← Static visualizations
 │   └── milestone3_final.ipynb           ← Fixed-effects, event study, Gradient Boosting
 │
 ├── data/
-│   ├── raw/                             ← Source CSVs
-│   └── processed/                       ← Cleaned and model-ready data
+│   ├── raw/                             ← Source CSVs (GSDB, Comtrade, WDI, UCDP)
+│   └── processed/                       ← Cleaned and model-ready datasets
 │
 ├── diary/                               ← Weekly decision logs (13 entries)
 │
@@ -107,16 +109,16 @@ streamlit run app.py
 
 ---
 
-## To reproduce
+## Running the Notebooks
+
+The analysis is split across five notebooks that should be run in order:
 
 ```bash
-# Install dependencies
 pip install -r requirements.txt
-
-# Run notebooks in order:
-# milestone1.ipynb → data_wrangling.ipynb → data_modeling.ipynb
-# → data_visualization_static.ipynb → milestone3_final.ipynb
-
-# Launch the app
-streamlit run app.py
 ```
+
+1. `milestone1.ipynb` — data acquisition, SQLite database setup, initial EDA
+2. `data_wrangling.ipynb` — cleaning, merging, feature engineering
+3. `data_modeling.ipynb` — Linear Regression and Random Forest
+4. `data_visualization_static.ipynb` — static plots and summaries
+5. `milestone3_final.ipynb` — fixed-effects regression, event study, Gradient Boosting
