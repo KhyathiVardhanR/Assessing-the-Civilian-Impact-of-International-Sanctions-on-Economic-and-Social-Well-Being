@@ -106,8 +106,8 @@ page = st.sidebar.radio(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Project:** Sanctions & Civilian Well-Being")
-st.sidebar.markdown("**Course:** IDS Milestone 3")
+st.sidebar.markdown("**Project:** Assessing the Civilian Impact of International Sanctions on Economic and Social Well-Being")
+st.sidebar.markdown("**Course:** Introduction to Data Science")
 st.sidebar.markdown("**Data:** 1995–2024 Country Panel")
 
 # ─── Helper Functions ─────────────────────────────────────────────────────────
