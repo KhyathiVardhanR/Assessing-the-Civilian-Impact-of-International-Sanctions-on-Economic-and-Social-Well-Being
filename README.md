@@ -1,15 +1,19 @@
 # Assessing the Civilian Impact of International Sanctions on Economic and Social Well-Being
 
+[![Live App](https://img.shields.io/badge/Streamlit-Live%20App-FF4B4B?logo=streamlit&logoColor=white)](https://sanctions-civilian-wellbeing.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Course](https://img.shields.io/badge/Course-Introduction%20to%20Data%20Science-green)](https://www.ufl.edu/)
+
+> **Live Dashboard:** [https://sanctions-civilian-wellbeing.streamlit.app](https://sanctions-civilian-wellbeing.streamlit.app)
+
+---
+
 ## Project Overview
 
-This project investigates how **international sanctions** affect the welfare of civilian populations.
-Rather than studying whether sanctions achieve their political goals, the project asks:
-**Do sanctions harm ordinary people, and through what economic channels do these effects operate?**
+This project investigates how **international sanctions** affect the welfare of civilian populations. Rather than studying whether sanctions achieve their political goals, the project asks: **Do sanctions harm ordinary people, and through what economic channels do these effects operate?**
 
 ### Research Question
-> How do international sanctions affect civilian economic and social well-being over time,
-> through what economic transmission mechanisms do these effects operate, and do these pressures
-> coincide with political instability or government turnover?
+> How do international sanctions affect civilian economic and social well-being over time, through what economic transmission mechanisms do these effects operate, and do these pressures coincide with political instability or government turnover?
 
 ### Conceptual Framework
 ```
@@ -23,20 +27,20 @@ Sanctions
 
 ---
 
-## Final Outcome (Milestone 3)
+## Deployed Tool
 
-### Deployed Tool
-🔗 **Live App:** [https://sanctions-civilian-wellbeing.streamlit.app](https://sanctions-civilian-wellbeing.streamlit.app)
+The project is deployed as an interactive **Streamlit dashboard** with 6 pages:
 
-The project is deployed as an interactive **Streamlit dashboard** (`app.py`) that allows users to:
-- Explore the country-year panel dataset with filters
-- Visualize sanction impacts on child mortality, education, and unemployment
-- Compare three machine learning models (Linear Regression, Random Forest, Gradient Boosting)
-- Examine fixed-effects regression results (causal inference)
-- Explore event-study dynamics around sanction onset
-- Review heterogeneous effects by regime type and sanction type
+| Page | Description |
+|------|-------------|
+| Overview | Research framework, methodology, dataset summary |
+| Data Explorer | Interactive filters across 7,820 country-year observations |
+| Sanction Impact | Descriptive comparisons across 5 civilian well-being dimensions |
+| Model Results | Linear Regression, Random Forest, and Gradient Boosting comparison |
+| Advanced Analysis | Fixed-effects regression, event study, multi-outcome results |
+| Findings | Key conclusions, variable justification, policy implications |
 
-**To run the dashboard locally:**
+**To run locally:**
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
@@ -46,20 +50,14 @@ streamlit run app.py
 
 ## Variable Selection
 
-### Dependent Variable (Primary Target)
+### Dependent Variable
 **`child_mortality_u5`** — Under-5 child mortality rate per 1,000 live births
 
-Justification:
-- Captures food security, healthcare access, sanitation, and poverty simultaneously
-- Best data completeness among welfare outcomes (only 9.5% missing)
-- Directly sensitive to policy channels targeted by sanctions (medicine, food imports)
-- Internationally comparable across countries and years
+Chosen because it captures food security, healthcare access, sanitation, and poverty simultaneously, has the best data completeness (only 9.5% missing), and is directly sensitive to the humanitarian channels that sanctions target.
 
-### Independent Variables (Treatment)
+### Treatment Variables
 - **`sanction_active`** — Binary indicator (1 = sanctions imposed, 0 = no sanctions)
 - **`sanction_intensity_index`** — Continuous 0–1 scale of sanction severity
-
-Using both captures threshold effects (any sanction) and dose-response effects (severity).
 
 ### Control Variables
 | Variable | Role |
@@ -75,6 +73,8 @@ Using both captures threshold effects (any sanction) and dose-response effects (
 ### Secondary Outcomes
 - `school_enrollment` — Human capital investment
 - `unemployment_rate` — Labor market impact
+- `SE.PRM.NENR.FE` — Girls primary enrollment (gender equity)
+- `inflation_rate` — Price stability
 
 ---
 
@@ -93,48 +93,22 @@ Using both captures threshold effects (any sanction) and dose-response effects (
 
 ```
 .
-├── app.py                          ← Streamlit deployment app (run this to launch dashboard)
-├── requirements.txt                ← Python dependencies
+├── app.py                               ← Streamlit dashboard (6 pages)
+├── requirements.txt                     ← Python dependencies
 ├── README.md
 │
 ├── Notebook/
-│   ├── milestone1.ipynb            ← Data acquisition & EDA
-│   ├── data_wrangling.ipynb        ← Cleaning & feature engineering
-│   ├── data_modeling.ipynb         ← Baseline & advanced modeling (M2)
+│   ├── milestone1.ipynb                 ← Data acquisition & EDA
+│   ├── data_wrangling.ipynb             ← Cleaning & feature engineering
+│   ├── data_modeling.ipynb              ← Linear Regression + Random Forest (M2)
 │   ├── data_visualization_static.ipynb  ← Static dashboard (M2)
-│   └── milestone3_final.ipynb      ← Final analysis: FE, event study, GB, multi-outcome (M3)
+│   └── milestone3_final.ipynb           ← Fixed-effects, event study, Gradient Boosting (M3)
 │
 ├── data/
-│   ├── raw/
-│   │   ├── sanctions.csv
-│   │   ├── trade.csv
-│   │   ├── wdi.csv
-│   │   └── political.csv
-│   └── processed/
-│       ├── merged_dataset.csv
-│       ├── feature_engineered_dataset.csv
-│       ├── model_ready_dataset.csv
-│       ├── fe_regression_results.csv       ← Fixed-effects results (M3)
-│       ├── multi_outcome_fe_results.csv    ← Multi-outcome FE (M3)
-│       ├── three_model_comparison.csv      ← All 3 models compared (M3)
-│       ├── event_study_stats.csv           ← Event study data (M3)
-│       ├── model_metrics.csv
-│       └── [prediction & importance CSVs]
+│   ├── raw/                             ← Source CSVs (GSDB, Comtrade, WDI, UCDP)
+│   └── processed/                       ← Cleaned, merged, and model-ready datasets
 │
-├── diary/
-│   ├── 01_problem_formulation.txt
-│   ├── 02_data_acquisition.txt
-│   ├── 03_database_storage.txt
-│   ├── 04_data_exploration.txt
-│   ├── 05_reflection_next_steps.txt
-│   ├── 06_data_cleaning.txt
-│   ├── 07_feature_engineering.txt
-│   ├── 08_modeling_setup.txt
-│   ├── 09_model_evaluation.txt
-│   ├── 10_dashboard_reflection.txt
-│   ├── 11_fixed_effects_analysis.txt       ← Milestone 3 diary (M3)
-│   ├── 12_advanced_modeling.txt            ← Milestone 3 diary (M3)
-│   └── 13_final_findings_deployment.txt    ← Milestone 3 diary (M3)
+├── diary/                               ← Weekly decision logs (13 entries)
 │
 └── docs/
     ├── database_schema.png
@@ -145,22 +119,15 @@ Using both captures threshold effects (any sanction) and dose-response effects (
 
 ## How to Reproduce
 
-### Step 1: Install Dependencies
 ```bash
+# 1. Install dependencies
 pip install -r requirements.txt
-```
 
-### Step 2: Run the Notebooks in Order
-```
-1. Notebook/milestone1.ipynb              # Data acquisition, EDA, database
-2. Notebook/data_wrangling.ipynb          # Cleaning, merging, feature engineering
-3. Notebook/data_modeling.ipynb           # Linear Regression + Random Forest (M2)
-4. Notebook/data_visualization_static.ipynb  # Static dashboard (M2)
-5. Notebook/milestone3_final.ipynb        # Fixed-effects, event study, GB, multi-outcome (M3)
-```
+# 2. Run notebooks in order
+#    milestone1.ipynb → data_wrangling.ipynb → data_modeling.ipynb
+#    → data_visualization_static.ipynb → milestone3_final.ipynb
 
-### Step 3: Launch the Dashboard
-```bash
+# 3. Launch the dashboard
 streamlit run app.py
 ```
 
@@ -168,23 +135,21 @@ streamlit run app.py
 
 ## Key Findings
 
-Findings come from **5 civilian well-being outcomes** across health, education, gender equity, and economic dimensions, plus a composite index combining all five.
+| Dimension | Outcome | FE Within-Country Effect | Significant? |
+|-----------|---------|--------------------------|--------------|
+| Health | child_mortality_u5 | +0.64 per 1,000 | No (p=0.69) |
+| Education | school_enrollment | +0.05 pp | No (p=0.97) |
+| Gender equity | Girls enrollment | +0.52 pp | No (p=0.67) |
+| Economic | unemployment_rate | −0.16 pp | No (p=0.68) |
+| Price stability | inflation_rate | +3.37 pp | No (p=0.24) |
+| **Composite** | Well-Being Index | Near zero | No |
 
-| Dimension | Outcome | Unadjusted Gap | FE Within-Country Effect | Significant? |
-|-----------|---------|----------------|--------------------------|--------------|
-| Health | child_mortality_u5 | Higher in sanctioned countries | +0.64 per 1,000 | No (p=0.69) |
-| Education | school_enrollment | Lower in sanctioned countries | +0.05 pp | No (p=0.97) |
-| Gender equity | Girls enrollment | Lower in sanctioned countries | +0.52 pp | No (p=0.67) |
-| Economic | unemployment_rate | Higher in sanctioned countries | −0.16 pp | No (p=0.68) |
-| Price stability | inflation_rate | Higher in sanctioned countries | +3.37 pp | No (p=0.24) |
-| **Composite** | Well-Being Index (0–100) | 94.2 vs 94.8 (≈ no gap) | Near zero | No |
+**Core Finding:** After controlling for country fixed effects, sanctions have no statistically significant within-country effect on any of the five well-being outcomes. The unadjusted descriptive gap is driven by **selection bias** — sanctioned countries were already poorer and more vulnerable before sanctions were imposed.
 
-**Core Finding:** After controlling for country fixed effects (which absorbs all pre-existing country-level differences), sanctions have NO statistically significant within-country effect on any of the five well-being outcomes. The unadjusted descriptive gap is driven by **selection bias** — countries targeted by sanctions were already poorer and more vulnerable before sanctions were imposed.
-
-1. **Best predictive model:** Gradient Boosting — Validation R²=0.83, Test R²=0.65
-2. **Top predictors:** Female primary enrollment, poverty rate, school enrollment
-3. **Event study:** Child mortality declines over the sanction window — tracking the global trend; no sharp break at onset
-4. **Policy implication:** Humanitarian relief programs for sanctioned populations need to address pre-existing structural vulnerability, not only the sanctions themselves
+- **Best model:** Gradient Boosting — Validation R²=0.83, Test R²=0.65
+- **Top predictors:** Female primary enrollment, poverty rate, school enrollment
+- **Event study:** No sharp break in child mortality at sanction onset
+- **Policy implication:** Humanitarian programs should address pre-existing structural vulnerability, not only the sanctions themselves
 
 ---
 
