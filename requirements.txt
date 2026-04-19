@@ -7,3 +7,4 @@ statsmodels>=0.14.0
 streamlit>=1.40.0
 plotly>=5.22.0
 pillow>=10.4.0
+ipywidgets>=8.0.0
