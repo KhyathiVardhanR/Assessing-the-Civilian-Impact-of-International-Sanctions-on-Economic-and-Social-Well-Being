@@ -190,9 +190,9 @@ Findings come from **5 civilian well-being outcomes** across health, education, 
 
 | Milestone | Status | Key Deliverables |
 |-----------|--------|-----------------|
-| Milestone 1 | ✅ Complete | Problem formulation, data acquisition, SQLite DB, EDA |
-| Milestone 2 | ✅ Complete | Data wrangling, feature engineering, LR + RF models, static dashboard |
-| Milestone 3 | ✅ Complete | Fixed-effects regression, event study, Gradient Boosting, Streamlit app |
+| Milestone 1 | Complete | Problem formulation, data acquisition, SQLite DB, EDA |
+| Milestone 2 | Complete | Data wrangling, feature engineering, LR + RF models, static dashboard |
+| Milestone 3 | Complete | Fixed-effects regression, event study, Gradient Boosting, Streamlit app |
 
 ---
 
