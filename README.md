@@ -8,6 +8,16 @@
 
 ---
 
+## Project Videos
+
+**Video 1 — Project Walkthrough:**
+[Watch here](https://youtu.be/IDydVYlZQaA)
+
+**Video 2 — App Demo:**
+[Watch here](https://youtu.be/5BphJSESYsk)
+
+---
+
 ## Overview
 
 Sanctions are frequently imposed as a foreign policy tool — but the conversation around them tends to focus on whether they work politically. This project takes a different angle: **what happens to ordinary people?**
